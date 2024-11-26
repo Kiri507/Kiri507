@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @Kiri507
-- 👀 I’m interested in Linux/Emacs Ricing
-- 🌱 I’m currently attempting the 11.Class
+- 👀 I’m interested in Linux Ricing, Emacs, Java
+- 🌱 I’m currently attempting the 11.Class 
 - 📫 How to reach me: k81499132@gmail.com
 
 <!---
