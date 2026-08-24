@@ -1,0 +1,14 @@
+set mouse
+set tabsize 4
+set tabstospaces
+set softwrap
+set indicator
+set constantshow
+set autoindent
+set historylog
+set positionlog
+set zap
+set multibuffer
+set locking
+
+include "/usr/share/nano/*.nanorc"
