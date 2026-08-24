@@ -186,7 +186,7 @@ bindsym Print exec grim
 ### Status bar
 
 bar {
-    position top
+    position bottom
 
     # Keep your existing CPU/battery status script
     status_command ~/.local/bin/sway-status
