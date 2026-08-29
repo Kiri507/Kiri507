@@ -10,26 +10,27 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term kitty
+set $term foot
 
 # Your preferred application launcher
 set $menu wmenu-run
 
-
 ### Output configuration
 
 # Wallpaper
-output * bg /home/k/pics/t470.png fill
+# Change this to your actual wallpaper path
+# output * bg /home/k/pics/t470.png fill
 
 
 ### Idle configuration
 
-# Example:
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-#          before-sleep 'swaylock -f -c 000000'
+# Lock after 30 minutes
+# Turn display off after 30 minutes + 5 seconds
+exec swayidle -w \
+    timeout 1800 'swaylock -f -c 000000' \
+    timeout 1805 'swaymsg "output * power off"' \
+    resume 'swaymsg "output * power on"' \
+    before-sleep 'swaylock -f -c 000000'
 
 
 ### Input configuration
@@ -51,7 +52,7 @@ bindsym $mod+b exec firefox
 bindsym $mod+d exec $menu
 
 # Kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # Drag floating windows by holding down $mod and left mouse button.
 floating_modifier $mod normal
@@ -60,7 +61,7 @@ floating_modifier $mod normal
 bindsym $mod+Shift+r reload
 
 # Exit sway
-bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym $mod+Shift+e exec swaynag -t warning -m 'this will end your Wayland session.' -B 'exit sway' 'swaymsg exit'
 
 
 ### Moving around
@@ -119,7 +120,6 @@ bindsym $mod+Shift+0 move container to workspace number 10
 
 ### Layout stuff
 
-
 # Stacking
 bindsym $mod+s layout stacking
 
@@ -159,10 +159,10 @@ gaps outer 0
 ### Utilities
 
 # Volume
-bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
-bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
-bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
-bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
 
 # Media
 bindsym --locked XF86AudioPlay exec playerctl play-pause
@@ -179,26 +179,26 @@ bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym Print exec grim
 
 
+### Autostart
+
+# Notifications
+exec dunst
+
+# NetworkManager tray applet
+exec nm-applet
+
+# Dark GTK theme
+exec gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+exec gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+exec_always gsettings set org.gnome.desktop.interface icon-theme 'Adwaita'
+
+# pipewire
+exec pipewire &
+exec wireplumber &
+exec pipewire-pulse &
 ### Status bar
 
+# Completely disabled
 bar {
-    position bottom
-
-    # Keep your existing CPU/battery status script
-    status_command ~/.local/bin/sway-status
-
-    # Completely black bar
-    colors {
-        background #000000
-        statusline #ffffff
-
-        # Hide workspace button colors
-        focused_workspace #000000 #000000 #000000
-        active_workspace #000000 #000000 #000000
-        inactive_workspace #000000 #000000 #000000
-        urgent_workspace #000000 #000000 #000000
-    }
-
-    # Don't show workspace buttons/numbers
-    workspace_buttons no
+    mode invisible
 }
